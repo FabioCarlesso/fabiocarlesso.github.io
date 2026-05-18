@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fabio Carlesso — Software Engineer</title>
+  <meta name="description" content="Fabio Carlesso — Software Engineer focused on Java, Spring Boot, Angular and AWS." />
+  <meta property="og:title" content="Fabio Carlesso — Software Engineer" />
+  <meta property="og:description" content="Backend in Java/Python, frontend in Angular, cloud on AWS." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://fabiocarlesso.github.io/" />
+  <meta name="theme-color" content="#2563eb" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a href="#" class="brand">
+      <span class="brand-mark">FC</span>
+      <span class="brand-name">Fabio Carlesso</span>
+    </a>
+    <nav class="nav">
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#stack" data-i18n="nav.stack">Stack</a>
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Toggle language">
+        <i class="fa-solid fa-globe" aria-hidden="true"></i>
+        <span id="langLabel">PT</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="avatar" aria-hidden="true">FC</div>
+      <h1>Fabio Carlesso</h1>
+      <p class="tagline" data-i18n="hero.tagline">Software Engineer · Java · Python · Cloud</p>
+      <p class="hero-lead" data-i18n="hero.lead">Building reliable backends and clean APIs from Foz do Iguaçu, Brazil.</p>
+      <div class="hero-cta">
+        <a href="https://github.com/FabioCarlesso" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+        </a>
+        <a href="https://fabiocarlesso.com" target="_blank" rel="noopener">
+          <i class="fa-solid fa-globe" aria-hidden="true"></i> fabiocarlesso.com
+        </a>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2 data-i18n="about.title">About</h2>
+      <p data-i18n="about.p1">Software engineer with a Computer Science degree (2013) and a postgraduate in Data Science &amp; Big Data (2022). I work with development in Java and Python and project monitoring using agile practices.</p>
+      <p data-i18n="about.p2">Certified Java Technology Specialist (2016), EXIN Agile Scrum Foundation (2019) and AWS Certified Cloud Practitioner (2023).</p>
+    </section>
+
+    <section id="stack" class="section">
+      <h2 data-i18n="stack.title">Stack</h2>
+      <div class="stack-groups">
+        <div class="stack-group">
+          <h3 data-i18n="stack.languages">Languages</h3>
+          <ul class="chips">
+            <li>Java</li>
+            <li>Python</li>
+            <li>TypeScript</li>
+          </ul>
+        </div>
+        <div class="stack-group">
+          <h3 data-i18n="stack.frameworks">Frameworks</h3>
+          <ul class="chips">
+            <li>Spring Boot</li>
+            <li>Angular</li>
+          </ul>
+        </div>
+        <div class="stack-group">
+          <h3 data-i18n="stack.cloud">Cloud &amp; DevOps</h3>
+          <ul class="chips">
+            <li>AWS</li>
+            <li>Git</li>
+            <li>GitHub Actions</li>
+          </ul>
+        </div>
+        <div class="stack-group">
+          <h3 data-i18n="stack.practices">Practices</h3>
+          <ul class="chips">
+            <li>Scrum</li>
+            <li>Design Patterns</li>
+            <li>REST APIs</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <h2 data-i18n="projects.title">Featured projects</h2>
+      <div class="projects">
+        <article class="project">
+          <header>
+            <span class="project-icon"><i class="fa-solid fa-person-running" aria-hidden="true"></i></span>
+            <h3>Carlesso Pilates</h3>
+          </header>
+          <p data-i18n="projects.pilates">REST API and admin UI for pilates studio management. Backend in Spring Boot 3 / Java 21, frontend in Angular 19.</p>
+          <ul class="chips small">
+            <li>Java 21</li>
+            <li>Spring Boot 3</li>
+            <li>Angular 19</li>
+            <li>REST</li>
+          </ul>
+          <footer>
+            <a href="https://github.com/FabioCarlesso/carlessopilatesapi" target="_blank" rel="noopener">
+              <i class="fa-solid fa-server" aria-hidden="true"></i> <span data-i18n="projects.api">API</span>
+            </a>
+            <a href="https://github.com/FabioCarlesso/carlessopilatesfe" target="_blank" rel="noopener">
+              <i class="fa-solid fa-display" aria-hidden="true"></i> <span data-i18n="projects.frontend">Frontend</span>
+            </a>
+          </footer>
+        </article>
+
+        <article class="project">
+          <header>
+            <span class="project-icon"><i class="fa-solid fa-futbol" aria-hidden="true"></i></span>
+            <h3>Cartola Odds</h3>
+          </header>
+          <p data-i18n="projects.cartola">Tool to help build a Cartola FC team based on data and probabilities. Java API with a TypeScript frontend.</p>
+          <ul class="chips small">
+            <li>Java</li>
+            <li>TypeScript</li>
+            <li>REST</li>
+          </ul>
+          <footer>
+            <a href="https://github.com/FabioCarlesso/cartolaoddsapi" target="_blank" rel="noopener">
+              <i class="fa-solid fa-server" aria-hidden="true"></i> <span data-i18n="projects.api">API</span>
+            </a>
+            <a href="https://github.com/FabioCarlesso/cartolaoddsfe" target="_blank" rel="noopener">
+              <i class="fa-solid fa-display" aria-hidden="true"></i> <span data-i18n="projects.frontend">Frontend</span>
+            </a>
+          </footer>
+        </article>
+
+        <article class="project">
+          <header>
+            <span class="project-icon"><i class="fa-solid fa-shapes" aria-hidden="true"></i></span>
+            <h3>Design Patterns</h3>
+          </header>
+          <p data-i18n="projects.patterns">Practical implementations of classic design patterns in Java — study repository.</p>
+          <ul class="chips small">
+            <li>Java</li>
+            <li>OOP</li>
+            <li>Patterns</li>
+          </ul>
+          <footer>
+            <a href="https://github.com/FabioCarlesso/DesignPatterns" target="_blank" rel="noopener">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> <span data-i18n="projects.repo">Repository</span>
+            </a>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2 data-i18n="contact.title">Contact</h2>
+      <p data-i18n="contact.lead">Open to chat about backend, cloud, agile and side projects.</p>
+      <ul class="contact-list">
+        <li>
+          <a href="https://github.com/FabioCarlesso" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github" aria-hidden="true"></i> github.com/FabioCarlesso
+          </a>
+        </li>
+        <li>
+          <a href="https://fabiocarlesso.com" target="_blank" rel="noopener">
+            <i class="fa-solid fa-globe" aria-hidden="true"></i> fabiocarlesso.com
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      © <span id="year"></span> Fabio Carlesso ·
+      <a href="https://github.com/FabioCarlesso/fabiocarlesso.github.io" target="_blank" rel="noopener" data-i18n="footer.source">Source</a>
+    </p>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
