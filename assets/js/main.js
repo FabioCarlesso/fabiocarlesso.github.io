@@ -1,26 +1,12 @@
-const translations = {
+const STATIC_LABELS = {
   en: {
     'nav.about': 'About',
     'nav.stack': 'Stack',
     'nav.projects': 'Projects',
     'nav.contact': 'Contact',
-    'hero.tagline': 'Software Engineer · Java · Python · Cloud',
-    'hero.lead': 'Building reliable backends and clean APIs from Foz do Iguaçu, Brazil.',
     'about.title': 'About',
-    'about.p1': 'Software engineer with a Computer Science degree (2013) and a postgraduate in Data Science & Big Data (2022). I work with development in Java and Python and project monitoring using agile practices.',
-    'about.p2': 'Certified Java Technology Specialist (2016), EXIN Agile Scrum Foundation (2019) and AWS Certified Cloud Practitioner (2023).',
     'stack.title': 'Stack',
-    'stack.languages': 'Languages',
-    'stack.frameworks': 'Frameworks',
-    'stack.cloud': 'Cloud & DevOps',
-    'stack.practices': 'Practices',
     'projects.title': 'Featured projects',
-    'projects.pilates': 'REST API and admin UI for pilates studio management. Backend in Spring Boot 3 / Java 21, frontend in Angular 19.',
-    'projects.cartola': 'Tool to help build a Cartola FC team based on data and probabilities. Java API with a TypeScript frontend.',
-    'projects.patterns': 'Practical implementations of classic design patterns in Java — study repository.',
-    'projects.api': 'API',
-    'projects.frontend': 'Frontend',
-    'projects.repo': 'Repository',
     'contact.title': 'Contact',
     'contact.lead': 'Open to chat about backend, cloud, agile and side projects.',
     'footer.source': 'Source'
@@ -30,38 +16,150 @@ const translations = {
     'nav.stack': 'Stack',
     'nav.projects': 'Projetos',
     'nav.contact': 'Contato',
-    'hero.tagline': 'Engenheiro de Software · Java · Python · Cloud',
-    'hero.lead': 'Construindo backends confiáveis e APIs limpas a partir de Foz do Iguaçu, Brasil.',
     'about.title': 'Sobre',
-    'about.p1': 'Engenheiro de software formado em Ciência da Computação (2013) e pós-graduado em Data Science & Big Data (2022). Atuo com desenvolvimento em Java e Python e acompanhamento de projetos com práticas ágeis.',
-    'about.p2': 'Especialista certificado em Tecnologia Java (2016), EXIN Agile Scrum Foundation (2019) e AWS Certified Cloud Practitioner (2023).',
     'stack.title': 'Stack',
-    'stack.languages': 'Linguagens',
-    'stack.frameworks': 'Frameworks',
-    'stack.cloud': 'Cloud & DevOps',
-    'stack.practices': 'Práticas',
     'projects.title': 'Projetos em destaque',
-    'projects.pilates': 'API REST e UI administrativa para gestão de studio de pilates. Backend em Spring Boot 3 / Java 21, frontend em Angular 19.',
-    'projects.cartola': 'Ferramenta para montar um time do Cartola FC com base em dados e probabilidades. API em Java com frontend em TypeScript.',
-    'projects.patterns': 'Implementações práticas de design patterns clássicos em Java — repositório de estudos.',
-    'projects.api': 'API',
-    'projects.frontend': 'Frontend',
-    'projects.repo': 'Repositório',
     'contact.title': 'Contato',
     'contact.lead': 'Aberto a conversar sobre backend, cloud, ágil e side projects.',
     'footer.source': 'Código-fonte'
   }
 };
 
-function applyLang(lang) {
+function pickLang(value, lang) {
+  if (value && typeof value === 'object' && (value.en || value.pt)) {
+    return value[lang] || value.en || value.pt || '';
+  }
+  return value || '';
+}
+
+function el(tag, opts = {}) {
+  const node = document.createElement(tag);
+  if (opts.className) node.className = opts.className;
+  if (opts.text != null) node.textContent = opts.text;
+  if (opts.href) node.href = opts.href;
+  if (opts.attrs) {
+    for (const [k, v] of Object.entries(opts.attrs)) node.setAttribute(k, v);
+  }
+  return node;
+}
+
+function fa(iconClass) {
+  const i = document.createElement('i');
+  i.className = iconClass || '';
+  i.setAttribute('aria-hidden', 'true');
+  return i;
+}
+
+function externalLink(url, iconClass, label) {
+  const a = el('a', { href: url, attrs: { target: '_blank', rel: 'noopener' } });
+  if (iconClass) {
+    a.appendChild(fa(iconClass));
+    a.appendChild(document.createTextNode(' '));
+  }
+  if (label) a.appendChild(document.createTextNode(label));
+  return a;
+}
+
+function renderHero(data, lang) {
+  const initials = data.profile.avatarInitials || 'FC';
+  document.getElementById('brandMark').textContent = initials;
+  document.getElementById('brandName').textContent = data.profile.name || '';
+  document.getElementById('heroAvatar').textContent = initials;
+  document.getElementById('heroName').textContent = data.profile.name || '';
+  document.getElementById('heroTagline').textContent = pickLang(data.profile.tagline, lang);
+  document.getElementById('heroLead').textContent = pickLang(data.profile.lead, lang);
+  document.title = `${data.profile.name || 'Portfolio'} — Software Engineer`;
+
+  const container = document.getElementById('heroLinks');
+  container.innerHTML = '';
+  (data.profile.heroLinks || []).forEach((link) => {
+    container.appendChild(externalLink(link.url, link.icon, link.label));
+  });
+}
+
+function renderAbout(data, lang) {
+  const container = document.getElementById('aboutBody');
+  container.innerHTML = '';
+  const paragraphs = (data.about && data.about[lang]) || data.about.en || [];
+  paragraphs.forEach((text) => {
+    container.appendChild(el('p', { text }));
+  });
+}
+
+function renderStack(data, lang) {
+  const container = document.getElementById('stackGroups');
+  container.innerHTML = '';
+  (data.stack || []).forEach((group) => {
+    const groupEl = el('div', { className: 'stack-group' });
+    groupEl.appendChild(el('h3', { text: pickLang(group.title, lang) }));
+    const ul = el('ul', { className: 'chips' });
+    (group.items || []).forEach((item) => ul.appendChild(el('li', { text: item })));
+    groupEl.appendChild(ul);
+    container.appendChild(groupEl);
+  });
+}
+
+function renderProjects(data, lang) {
+  const container = document.getElementById('projectsList');
+  container.innerHTML = '';
+  (data.projects || []).forEach((project) => {
+    const article = el('article', { className: 'project' });
+
+    const header = el('header');
+    const iconWrap = el('span', { className: 'project-icon' });
+    iconWrap.appendChild(fa(project.icon));
+    header.appendChild(iconWrap);
+    header.appendChild(el('h3', { text: project.name || '' }));
+    article.appendChild(header);
+
+    article.appendChild(el('p', { text: pickLang(project.description, lang) }));
+
+    const chips = el('ul', { className: 'chips small' });
+    (project.chips || []).forEach((c) => chips.appendChild(el('li', { text: c })));
+    article.appendChild(chips);
+
+    if ((project.links || []).length) {
+      const footer = el('footer');
+      project.links.forEach((link) => {
+        footer.appendChild(externalLink(link.url, link.icon, pickLang(link.label, lang)));
+      });
+      article.appendChild(footer);
+    }
+
+    container.appendChild(article);
+  });
+}
+
+function renderContacts(data) {
+  const container = document.getElementById('contactList');
+  container.innerHTML = '';
+  (data.contacts || []).forEach((contact) => {
+    const li = el('li');
+    li.appendChild(externalLink(contact.url, contact.icon, contact.label));
+    container.appendChild(li);
+  });
+}
+
+function applyStaticLabels(lang) {
   document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
-  document.querySelectorAll('[data-i18n]').forEach((el) => {
-    const key = el.getAttribute('data-i18n');
-    const value = translations[lang] && translations[lang][key];
-    if (value) el.textContent = value;
+  document.querySelectorAll('[data-i18n]').forEach((node) => {
+    const key = node.getAttribute('data-i18n');
+    const value = STATIC_LABELS[lang] && STATIC_LABELS[lang][key];
+    if (value) node.textContent = value;
   });
   const label = document.getElementById('langLabel');
   if (label) label.textContent = lang === 'en' ? 'PT' : 'EN';
+}
+
+function applyLang(lang, data) {
+  applyStaticLabels(lang);
+  if (data) {
+    renderHero(data, lang);
+    renderAbout(data, lang);
+    renderStack(data, lang);
+    renderProjects(data, lang);
+    renderContacts(data);
+  }
   try { localStorage.setItem('lang', lang); } catch (e) { /* ignore */ }
 }
 
@@ -75,16 +173,29 @@ function applyTheme(theme) {
   try { localStorage.setItem('theme', theme); } catch (e) { /* ignore */ }
 }
 
+function loadSiteData() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('draft') === '1') {
+    try {
+      const draft = localStorage.getItem('siteDataDraft');
+      if (draft) return JSON.parse(draft);
+    } catch (e) { /* fall through */ }
+  }
+  return window.SITE_DATA || null;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  const data = loadSiteData();
+
   let lang = 'en';
   try { lang = localStorage.getItem('lang') || 'en'; } catch (e) { /* ignore */ }
-  applyLang(lang);
+  applyLang(lang, data);
 
   const langToggle = document.getElementById('langToggle');
   if (langToggle) {
     langToggle.addEventListener('click', () => {
       const current = document.documentElement.lang.startsWith('pt') ? 'pt' : 'en';
-      applyLang(current === 'en' ? 'pt' : 'en');
+      applyLang(current === 'en' ? 'pt' : 'en', data);
     });
   }
 
