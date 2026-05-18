@@ -65,16 +65,37 @@ function applyLang(lang) {
   try { localStorage.setItem('lang', lang); } catch (e) { /* ignore */ }
 }
 
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const icon = document.getElementById('themeIcon');
+  if (icon) {
+    icon.classList.toggle('fa-moon', theme === 'light');
+    icon.classList.toggle('fa-sun', theme === 'dark');
+  }
+  try { localStorage.setItem('theme', theme); } catch (e) { /* ignore */ }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   let lang = 'en';
   try { lang = localStorage.getItem('lang') || 'en'; } catch (e) { /* ignore */ }
   applyLang(lang);
 
-  const toggle = document.getElementById('langToggle');
-  if (toggle) {
-    toggle.addEventListener('click', () => {
+  const langToggle = document.getElementById('langToggle');
+  if (langToggle) {
+    langToggle.addEventListener('click', () => {
       const current = document.documentElement.lang.startsWith('pt') ? 'pt' : 'en';
       applyLang(current === 'en' ? 'pt' : 'en');
+    });
+  }
+
+  const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  applyTheme(currentTheme);
+
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
     });
   }
 
