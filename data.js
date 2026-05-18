@@ -72,6 +72,11 @@ window.SITE_DATA = {
       ]
     }
   ],
+  links: [
+    { icon: "fa-solid fa-wand-magic-sparkles", label: "Prompt Finction", url: "https://fabiocarlesso.github.io/prompt-finction/" },
+    { icon: "fa-solid fa-trophy", label: "Brag Matrix", url: "https://fabiocarlesso.github.io/brag-matrix/" },
+    { icon: "fa-solid fa-futbol", label: "Cartola Garela AFC", url: "https://fabiocarlesso.github.io/cartola-garela-afc/" }
+  ],
   contacts: [
     { icon: "fa-brands fa-github", label: "github.com/FabioCarlesso", url: "https://github.com/FabioCarlesso" },
     { icon: "fa-brands fa-linkedin", label: "linkedin.com/in/fabio-carlesso", url: "https://www.linkedin.com/in/fabio-carlesso/" },

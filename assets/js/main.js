@@ -3,10 +3,12 @@ const STATIC_LABELS = {
     'nav.about': 'About',
     'nav.stack': 'Stack',
     'nav.projects': 'Projects',
+    'nav.links': 'Links',
     'nav.contact': 'Contact',
     'about.title': 'About',
     'stack.title': 'Stack',
     'projects.title': 'Featured projects',
+    'links.title': 'Related links',
     'contact.title': 'Contact',
     'contact.lead': 'Open to chat about backend, cloud, agile and side projects.',
     'footer.source': 'Source'
@@ -15,10 +17,12 @@ const STATIC_LABELS = {
     'nav.about': 'Sobre',
     'nav.stack': 'Stack',
     'nav.projects': 'Projetos',
+    'nav.links': 'Links',
     'nav.contact': 'Contato',
     'about.title': 'Sobre',
     'stack.title': 'Stack',
     'projects.title': 'Projetos em destaque',
+    'links.title': 'Links relacionados',
     'contact.title': 'Contato',
     'contact.lead': 'Aberto a conversar sobre backend, cloud, ágil e side projects.',
     'footer.source': 'Código-fonte'
@@ -130,6 +134,20 @@ function renderProjects(data, lang) {
   });
 }
 
+function renderLinks(data) {
+  const container = document.getElementById('linksList');
+  if (!container) return;
+  container.innerHTML = '';
+  (data.links || []).forEach((link) => {
+    const card = el('a', { className: 'link-card', href: link.url, attrs: { target: '_blank', rel: 'noopener' } });
+    const iconWrap = el('span', { className: 'link-card-icon' });
+    iconWrap.appendChild(fa(link.icon));
+    card.appendChild(iconWrap);
+    card.appendChild(el('span', { className: 'link-card-label', text: link.label || link.url }));
+    container.appendChild(card);
+  });
+}
+
 function renderContacts(data) {
   const container = document.getElementById('contactList');
   container.innerHTML = '';
@@ -158,6 +176,7 @@ function applyLang(lang, data) {
     renderAbout(data, lang);
     renderStack(data, lang);
     renderProjects(data, lang);
+    renderLinks(data);
     renderContacts(data);
   }
   try { localStorage.setItem('lang', lang); } catch (e) { /* ignore */ }

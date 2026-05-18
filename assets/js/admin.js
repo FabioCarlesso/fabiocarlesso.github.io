@@ -82,6 +82,7 @@ function renderForm() {
   root.appendChild(renderAboutSection());
   root.appendChild(renderStackSection());
   root.appendChild(renderProjectsSection());
+  root.appendChild(renderLinksSection());
   root.appendChild(renderContactsSection());
 }
 
@@ -238,6 +239,14 @@ function renderProjectsSection() {
     saveDraft();
     rerender();
   }));
+  return s;
+}
+
+function renderLinksSection() {
+  const s = section('Related links');
+  data.links = data.links || [];
+  const rerender = () => { const fresh = renderLinksSection(); s.replaceWith(fresh); };
+  s.appendChild(renderLinkList(data.links, rerender));
   return s;
 }
 
