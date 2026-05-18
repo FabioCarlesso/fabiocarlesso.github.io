@@ -74,6 +74,7 @@ window.SITE_DATA = {
     chips: ["Java 21", "REST"],
     links: [{ icon, label, url }, ...]
   }],
+  links: [{ icon, label, url }, ...],
   contacts: [{ icon, label, url }, ...]
 };
 ```
