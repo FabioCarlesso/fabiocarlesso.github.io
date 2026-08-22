@@ -2,12 +2,16 @@ const STATIC_LABELS = {
   en: {
     'nav.about': 'About',
     'nav.stack': 'Stack',
+    'nav.live': 'Live',
     'nav.projects': 'Projects',
     'nav.links': 'Links',
     'nav.contact': 'Contact',
     'about.title': 'About',
     'stack.title': 'Stack',
-    'projects.title': 'Featured projects',
+    'live.title': 'Live in production',
+    'live.lead': 'Open source on GitHub and running in production — click through to use the real app.',
+    'live.badge': 'Live',
+    'projects.title': 'Other projects',
     'links.title': 'Related links',
     'contact.title': 'Contact',
     'contact.lead': 'Open to chat about backend, cloud, agile and side projects.',
@@ -16,12 +20,16 @@ const STATIC_LABELS = {
   pt: {
     'nav.about': 'Sobre',
     'nav.stack': 'Stack',
+    'nav.live': 'No ar',
     'nav.projects': 'Projetos',
     'nav.links': 'Links',
     'nav.contact': 'Contato',
     'about.title': 'Sobre',
     'stack.title': 'Stack',
-    'projects.title': 'Projetos em destaque',
+    'live.title': 'Em produção',
+    'live.lead': 'Código aberto no GitHub e rodando em produção — clique e use o app de verdade.',
+    'live.badge': 'No ar',
+    'projects.title': 'Outros projetos',
     'links.title': 'Links relacionados',
     'contact.title': 'Contato',
     'contact.lead': 'Aberto a conversar sobre backend, cloud, ágil e side projects.',
@@ -34,6 +42,20 @@ function pickLang(value, lang) {
     return value[lang] || value.en || value.pt || '';
   }
   return value || '';
+}
+
+function t(lang, key) {
+  const dict = STATIC_LABELS[lang] || STATIC_LABELS.en;
+  return dict[key] || STATIC_LABELS.en[key] || '';
+}
+
+function liveLabel(live) {
+  if (live.label) return live.label;
+  try {
+    return new URL(live.url).hostname;
+  } catch (e) {
+    return live.url;
+  }
 }
 
 function el(tag, opts = {}) {
@@ -103,35 +125,70 @@ function renderStack(data, lang) {
   });
 }
 
+function isLive(project) {
+  return Boolean(project && project.live && project.live.url);
+}
+
+function liveBadge(lang) {
+  const badge = el('span', { className: 'live-badge' });
+  badge.appendChild(el('span', { className: 'live-dot', attrs: { 'aria-hidden': 'true' } }));
+  badge.appendChild(document.createTextNode(t(lang, 'live.badge')));
+  return badge;
+}
+
+function projectCard(project, lang) {
+  const live = isLive(project);
+  const article = el('article', { className: live ? 'project is-live' : 'project' });
+
+  const header = el('header');
+  const iconWrap = el('span', { className: 'project-icon' });
+  iconWrap.appendChild(fa(project.icon));
+  header.appendChild(iconWrap);
+  header.appendChild(el('h3', { text: project.name || '' }));
+  if (live) header.appendChild(liveBadge(lang));
+  article.appendChild(header);
+
+  article.appendChild(el('p', { text: pickLang(project.description, lang) }));
+
+  const chips = el('ul', { className: 'chips small' });
+  (project.chips || []).forEach((c) => chips.appendChild(el('li', { text: c })));
+  article.appendChild(chips);
+
+  const footer = el('footer');
+  if (live) {
+    const cta = externalLink(project.live.url, 'fa-solid fa-arrow-up-right-from-square', liveLabel(project.live));
+    cta.className = 'project-cta';
+    footer.appendChild(cta);
+  }
+  (project.links || []).forEach((link) => {
+    footer.appendChild(externalLink(link.url, link.icon, pickLang(link.label, lang)));
+  });
+  if (footer.childNodes.length) article.appendChild(footer);
+
+  return article;
+}
+
 function renderProjects(data, lang) {
+  const all = data.projects || [];
+  const live = all.filter(isLive);
+  const rest = all.filter((project) => !isLive(project));
+
+  const liveList = document.getElementById('liveList');
+  if (liveList) {
+    liveList.innerHTML = '';
+    live.forEach((project) => liveList.appendChild(projectCard(project, lang)));
+  }
+  const liveSection = document.getElementById('live');
+  if (liveSection) liveSection.hidden = live.length === 0;
+  const liveNav = document.querySelector('.nav a[href="#live"]');
+  if (liveNav) liveNav.hidden = live.length === 0;
+
   const container = document.getElementById('projectsList');
   container.innerHTML = '';
-  (data.projects || []).forEach((project) => {
-    const article = el('article', { className: 'project' });
+  rest.forEach((project) => container.appendChild(projectCard(project, lang)));
 
-    const header = el('header');
-    const iconWrap = el('span', { className: 'project-icon' });
-    iconWrap.appendChild(fa(project.icon));
-    header.appendChild(iconWrap);
-    header.appendChild(el('h3', { text: project.name || '' }));
-    article.appendChild(header);
-
-    article.appendChild(el('p', { text: pickLang(project.description, lang) }));
-
-    const chips = el('ul', { className: 'chips small' });
-    (project.chips || []).forEach((c) => chips.appendChild(el('li', { text: c })));
-    article.appendChild(chips);
-
-    if ((project.links || []).length) {
-      const footer = el('footer');
-      project.links.forEach((link) => {
-        footer.appendChild(externalLink(link.url, link.icon, pickLang(link.label, lang)));
-      });
-      article.appendChild(footer);
-    }
-
-    container.appendChild(article);
-  });
+  const projectsSection = document.getElementById('projects');
+  if (projectsSection) projectsSection.hidden = rest.length === 0;
 }
 
 function renderLinks(data) {

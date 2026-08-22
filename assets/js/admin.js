@@ -212,6 +212,25 @@ function renderProjectsSection() {
 
     card.appendChild(field('Icon', input(project.icon, (v) => { project.icon = v; }, 'fa-solid fa-shapes')));
 
+    const live = { url: (project.live && project.live.url) || '', label: (project.live && project.live.label) || '' };
+    const syncLive = () => {
+      const url = live.url.trim();
+      if (!url) {
+        delete project.live;
+        return;
+      }
+      project.live = { url };
+      const label = live.label.trim();
+      if (label) project.live.label = label;
+    };
+
+    const liveGrid = el('div', { className: 'field-grid' });
+    liveGrid.appendChild(field('Live URL — leave empty if not in production',
+      input(live.url, (v) => { live.url = v; syncLive(); }, 'https://app.example.com', 'url')));
+    liveGrid.appendChild(field('Live label — defaults to the hostname',
+      input(live.label, (v) => { live.label = v; syncLive(); }, 'app.example.com')));
+    card.appendChild(liveGrid);
+
     const descGrid = el('div', { className: 'field-grid' });
     descGrid.appendChild(field('Description (EN)', textarea(project.description.en, (v) => { project.description.en = v; }, 3)));
     descGrid.appendChild(field('Description (PT)', textarea(project.description.pt, (v) => { project.description.pt = v; }, 3)));
