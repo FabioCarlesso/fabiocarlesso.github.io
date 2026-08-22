@@ -10,6 +10,10 @@
   --chip-text: #3730a3;
   --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
   --radius: 12px;
+  --on-primary: #ffffff;
+  --live: #16a34a;
+  --live-bg: #dcfce7;
+  --live-text: #15803d;
 }
 
 [data-theme='dark'] {
@@ -23,9 +27,14 @@
   --chip-bg: #1e2740;
   --chip-text: #b4c5ff;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --on-primary: #0f1422;
+  --live: #4ade80;
+  --live-bg: #14321f;
+  --live-text: #86efac;
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
@@ -208,6 +217,74 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
   gap: 0.35rem;
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+.section-lead {
+  color: var(--muted);
+  margin: -0.4rem 0 1.2rem;
+  max-width: 60ch;
+}
+
+.projects.featured {
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+}
+.projects.featured .project { padding: 1.6rem; }
+.projects.featured .project header h3 { font-size: 1.3rem; }
+
+.project.is-live {
+  border-color: color-mix(in srgb, var(--live) 45%, var(--border));
+  box-shadow: var(--shadow), 0 0 0 1px color-mix(in srgb, var(--live) 18%, transparent);
+}
+.project.is-live:hover { border-color: var(--live); }
+.project.is-live .project-icon {
+  background: var(--live-bg);
+  color: var(--live-text);
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+  padding: 0.2rem 0.6rem;
+  background: var(--live-bg);
+  color: var(--live-text);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 60%, transparent);
+  animation: live-pulse 2s ease-out infinite;
+}
+@keyframes live-pulse {
+  70% { box-shadow: 0 0 0 6px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .live-dot { animation: none; }
+}
+
+.project footer a.project-cta {
+  padding: 0.45rem 0.9rem;
+  background: var(--primary);
+  color: var(--on-primary);
+  border-radius: 999px;
+  font-weight: 600;
+  word-break: break-all;
+  transition: background-color 0.15s ease;
+}
+.project footer a.project-cta:hover {
+  background: var(--primary-dark);
+  color: var(--on-primary);
+  text-decoration: none;
 }
 
 .links-grid {

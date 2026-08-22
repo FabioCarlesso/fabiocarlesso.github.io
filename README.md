@@ -13,6 +13,7 @@ Personal developer portfolio — bilingual (EN/PT), dark mode, and an admin page
 
 ## Features
 - Bilingual content with a topbar toggle (EN default, PT toggle, choice persisted)
+- Projects that are live on the internet get their own highlighted section, driven by a `live` field in `data.js`
 - Light/dark theme toggle, falls back to system preference, no flash on load
 - Single-source-of-truth content model (`data.js`) consumed by both the public page and the admin
 - Admin page with auto-saved drafts and one-click export back to `data.js`
@@ -70,6 +71,7 @@ window.SITE_DATA = {
   ],
   projects: [{
     name, icon,
+    live: { url, label },          // optional — see below
     description: { en, pt },
     chips: ["Java 21", "REST"],
     links: [{ icon, label, url }, ...]
@@ -79,6 +81,8 @@ window.SITE_DATA = {
 };
 ```
 `icon` strings are Font Awesome classes (e.g. `fa-brands fa-github`, `fa-solid fa-server`).
+
+A project with a `live.url` is rendered in the **Live in production** section at the top of the page, with a "Live" badge and a primary button pointing at the public app. Everything else falls into **Other projects** below. `live.label` is the text on that button and defaults to the URL's hostname. Remove `live` and the project drops back into the regular grid; remove it from every project and the whole section (and its nav item) hides itself.
 
 ## Deploy
 
