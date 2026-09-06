@@ -190,7 +190,7 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
 .project:hover { transform: translateY(-2px); border-color: var(--primary); }
-.project header { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.6rem; }
+.project header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; margin-bottom: 0.6rem; }
 .project header h3 { margin: 0; font-size: 1.15rem; }
 .project-icon {
   width: 36px;
@@ -225,11 +225,7 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
   max-width: 60ch;
 }
 
-.projects.featured {
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-}
 .projects.featured .project { padding: 1.6rem; }
-.projects.featured .project header h3 { font-size: 1.3rem; }
 
 .project.is-live {
   border-color: color-mix(in srgb, var(--live) 45%, var(--border));
@@ -273,12 +269,14 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
 }
 
 .project footer a.project-cta {
-  padding: 0.45rem 0.9rem;
+  flex: 1 1 100%;
+  justify-content: center;
+  padding: 0.5rem 0.9rem;
   background: var(--primary);
   color: var(--on-primary);
   border-radius: 999px;
   font-weight: 600;
-  word-break: break-all;
+  white-space: nowrap;
   transition: background-color 0.15s ease;
 }
 .project footer a.project-cta:hover {

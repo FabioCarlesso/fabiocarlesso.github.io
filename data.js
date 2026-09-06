@@ -61,6 +61,20 @@ window.SITE_DATA = {
       ]
     },
     {
+      name: "Cartola Odds",
+      icon: "fa-solid fa-futbol",
+      live: { url: "https://cartola.fabiocarlesso.com", label: "cartola.fabiocarlesso.com" },
+      description: {
+        en: "Builds a competitive Cartola FC team by crossing Brasileirão odds with player metrics: ideal line-up for the round with an optional budget, weighted player ranking, favourites analysis and formation comparison. Spring Boot API with an Angular dashboard.",
+        pt: "Monta um time competitivo do Cartola FC cruzando odds do Brasileirão com métricas dos atletas: time ideal da rodada com orçamento opcional, ranking ponderado, análise de favoritos e comparação de formações. API em Spring Boot com dashboard em Angular."
+      },
+      chips: ["Java 21", "Spring Boot 3.4", "Angular 21", "TypeScript", "JWT"],
+      links: [
+        { icon: "fa-solid fa-server", label: "API", url: "https://github.com/FabioCarlesso/cartolaoddsapi" },
+        { icon: "fa-solid fa-display", label: "Frontend", url: "https://github.com/FabioCarlesso/cartolaoddsfe" }
+      ]
+    },
+    {
       name: "GoalFather",
       icon: "fa-solid fa-shield-halved",
       description: {
@@ -82,19 +96,6 @@ window.SITE_DATA = {
       chips: ["Java 17", "Spring Boot 3", "JWT", "React", "Tailwind", "PostgreSQL 16"],
       links: [
         { icon: "fa-brands fa-github", label: "Repository", url: "https://github.com/FabioCarlesso/goodfunds" }
-      ]
-    },
-    {
-      name: "Cartola Odds",
-      icon: "fa-solid fa-futbol",
-      description: {
-        en: "Tool to help build a Cartola FC team based on data and probabilities. Java API with a TypeScript frontend.",
-        pt: "Ferramenta para montar um time do Cartola FC com base em dados e probabilidades. API em Java com frontend em TypeScript."
-      },
-      chips: ["Java", "TypeScript", "REST"],
-      links: [
-        { icon: "fa-solid fa-server", label: "API", url: "https://github.com/FabioCarlesso/cartolaoddsapi" },
-        { icon: "fa-solid fa-display", label: "Frontend", url: "https://github.com/FabioCarlesso/cartolaoddsfe" }
       ]
     },
     {
